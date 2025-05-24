@@ -1,12 +1,11 @@
 import express, { Express } from "express";
 import transactionRoutes from "@/routes/transactionRoutes";
 import dotenv from "dotenv";
-import env from "@/config/env";
 
 dotenv.config();
 
 const app: Express = express();
-const port = env.PORT;
+const port = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use("/api/transactions", transactionRoutes);
