@@ -1,7 +1,7 @@
 import express, { Express } from "express";
 import transactionRoutes from "@/routes/transactionRoutes";
 import dotenv from "dotenv";
-import { db, checkDatabaseConnection } from "./config/db";
+import { checkDatabaseConnection } from "./config/db";
 
 dotenv.config();
 
@@ -11,9 +11,17 @@ const port = process.env.PORT || 3000;
 app.use(express.json());
 app.use("/api/transactions", transactionRoutes);
 
-// Check database connection
-checkDatabaseConnection();
+// Start server only after checking database connection
+const startServer = async () => {
+  try {
+    await checkDatabaseConnection();
+    app.listen(port, () => {
+      console.log(`Server running at http://localhost:${port}`);
+    });
+  } catch (error) {
+    console.error('Failed to start server:', error);
+    process.exit(1);
+  }
+};
 
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
-});
+startServer();

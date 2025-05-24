@@ -9,12 +9,16 @@ const pool = new Pool({
 
 export const db = drizzle(pool, { schema: { transactions } });
 
-export const checkDatabaseConnection = () => {
-  pool.on("connect", () => {
-    console.log("Database is running! ✨");
-  });
-  
-  pool.on("error", (err) => {
-    console.error("Database connection error:", err);
-  });
+export const checkDatabaseConnection = async () => {
+  try {
+    await pool.query('SELECT 1');
+    console.log('Database is running! ✨');
+    return true;
+  } catch (error) {
+    console.error('Database connection failed:', error);
+    return false;
+  }
 };
+
+// Test connection immediately
+checkDatabaseConnection();
