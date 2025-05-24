@@ -3,12 +3,17 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "dev": "nodemon -r tsconfig-paths/register src/server.ts",
+    "db:generate": "drizzle-kit generate:pg",
+    "db:push": "drizzle-kit push:pg",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": ["typescript", "express", "postgresql", "drizzle-orm", "api"],
   "author": "",
   "license": "ISC",
-  "description": "",
+  "description": "Money Manager API - A RESTful API for managing financial transactions",
   "dependencies": {
     "@types/express": "^5.0.2",
     "@types/node": "^22.15.21",
